@@ -33,11 +33,3 @@ const main = async () => {
 }
 
 main()
-
-
-
-// const post = orm.em.create(Post, {title: 'my first post'}) //creating new post
-// await orm.em.persistAndFlush(post) //inserting the new post to the db forsocial
-
-// const posts = await orm.em.find(Post, {})
-// console.log(posts)
