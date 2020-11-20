@@ -14,7 +14,7 @@ export class PostResolver { //this is our schema
     //first line is my context (em) with it's type, then the type of the return (which is post)
     posts(@Ctx() { em }: MyContext) : Promise<Post[]> { //(TS type) (duplication)
         return em.find(Post, {})
-    } 
+    }
 
 
     //reading only one post by it's id (takes an argument) (READ)
