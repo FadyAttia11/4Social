@@ -1,0 +1,13 @@
+mutation Login($options: UsernamePasswordInput!) { # different approch of declaring variables
+    login(options: $options){
+      errors{
+        field
+        message
+      },
+      user{
+        id
+          username
+      }
+    }
+}
+
