@@ -3,6 +3,7 @@ import { Formik, Form } from 'formik'
 import { Box, Button } from '@chakra-ui/react'
 import Wrapper from '../components/Wrapper'
 import InputField from '../components/InputField'
+<<<<<<< HEAD
 import { Exact, useRegisterMutation } from '../generated/graphql'
 import { toErrorMap } from '../utils/toErrorMap'
 import { useRouter } from 'next/router'
@@ -12,10 +13,19 @@ interface registerProps {}
 const Register: React.FC<registerProps> = ({}) => {
     const router = useRouter() //in nextjs to push routes
     const [, register] = useRegisterMutation()
+=======
+ 
+
+interface registerProps {}
+
+
+const Register: React.FC<registerProps> = ({}) => {
+>>>>>>> 84d2512fb6291304a04c15834b8213eb4e8b7ef0
     return (
         <Wrapper variant="small">
             <Formik 
                 initialValues={{ username: "", password: "" }} 
+<<<<<<< HEAD
                 onSubmit={async (values: any, { setErrors }: any) => {
                     const response = await register(values);
                     if(response.data?.register.errors) {
@@ -24,6 +34,10 @@ const Register: React.FC<registerProps> = ({}) => {
                         //worked
                         router.push("/")
                     }
+=======
+                onSubmit={values => {
+                    console.log(values)
+>>>>>>> 84d2512fb6291304a04c15834b8213eb4e8b7ef0
                 }}
             >
                 {({isSubmitting = false}) => (
