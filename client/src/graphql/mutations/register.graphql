@@ -1,0 +1,15 @@
+mutation Register($username: String!, $password: String!) {
+    register(options: {username: $username, password: $password}){
+      errors{
+        field
+        message
+      },
+      user{
+        id
+          username
+      }
+    }
+}
+
+# we use yarn gen after making every mutation or query to do the ts type magic
+# then we use the custom hook on the generated file to refer to the mutation

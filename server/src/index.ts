@@ -12,8 +12,7 @@ import { UserResolver } from "./resolvers/user"
 import redis from 'redis'
 import session from 'express-session'
 import connectRedis from 'connect-redis'
-import { MyContext } from "./types"
-
+import cors from 'cors'
 
 const main = async () => {
     
@@ -26,7 +25,10 @@ const main = async () => {
     //this is to make a cookie inside the browser for the logged in user
     const RedisStore = connectRedis(session)
     const redisClient = redis.createClient()
-
+    app.use(cors({
+        origin: "http://localhost:3000",
+        credentials: true
+    }))
     app.use(
         session({
             name: 'qid',
@@ -52,10 +54,13 @@ const main = async () => {
             validate: false
         }),
         //special object accessible by all your resolvers
-        context: ({ req, res }): MyContext => ({ em: orm.em, req, res }) //to be able to access orm from our resolvers
+        context: ({ req, res }) => ({ em: orm.em, req, res }) //to be able to access orm from our resolvers
     })
 
-    apolloServer.applyMiddleware({ app })
+    apolloServer.applyMiddleware({ 
+        app, 
+        cors: false
+    })
 
     app.listen(5000, () => {
         console.log('server is running on localhost:5000')
