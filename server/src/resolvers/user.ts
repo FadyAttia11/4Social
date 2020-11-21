@@ -3,6 +3,7 @@ import { Arg, Ctx, Field, InputType, Mutation, ObjectType, Query, Resolver } fro
 import argon2 from 'argon2'
 import { User } from "../entities/User";
 import { EntityManager } from '@mikro-orm/postgresql'
+import { COOKIE_NAME } from "../constants";
 
 @InputType() //inputtype ==> we use for arguments
 class UsernamePasswordInput {
@@ -141,5 +142,26 @@ export class UserResolver {
         return {
             user
         }
+    }
+
+
+    //for logout user
+    @Mutation(() => Boolean)
+    logout (
+        @Ctx() { req, res }: MyContext
+    ) { 
+        res.clearCookie(COOKIE_NAME)
+        return new Promise ((resolve) =>
+            req.session.destroy((err: any) => { //req.session.destory ==> to remove the session from the Redis db
+                res.clearCookie('qid') //res.clearCookie ==> to remove the cookie from the user browser
+                if(err) {
+                    console.log(err)
+                    resolve(false)
+                    return
+                }
+
+                resolve(true)
+            })
+        )
     }
 }
